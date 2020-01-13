@@ -14,7 +14,7 @@ Configuration
 First, Pull the image:
 
 ```bash
-docker pull laslabs/alpine-samba-dc:0.1.0
+docker pull celfring/samba-ad-dc
 ```
 
 Now, start the image with the correct environment variables for initial
@@ -31,7 +31,9 @@ docker run -d --restart unless-stopped \
     -e SAMBA_DC_DOMAIN='EXAMPLE' \
     -e SAMBA_DC_ADMIN_PASSWD='5u3r53cur3!' \
     -e SAMBA_DC_DNS_BACKEND='SAMBA_INTERNAL' \
-    -v ${PWD}/samba:/samba \
+    -v ${PWD}/samba/etc:/etc/samba \
+    -v ${PWD}/samba/lib:/var/lib/samba \
+    -v ${PWD}/samba/log:/var/log/samba \
      'laslabs/alpine-samba-dc:0.1.0'
 ```
 
@@ -40,18 +42,8 @@ Usage
 After the container has been run for the first time, invoke it with the following command
 
 ```bash
-docker run -d --restart unless-stopped -v ${PWD}/samba:/samba 'laslabs/alpine-samba-dc:0.1.0'
+docker run -d --restart unless-stopped 'laslabs/alpine-samba-dc:0.1.0'
 ```
-
-Volumes
-=======
-
-The following volumes are exposed:
-
-
-| Name | Value | Description |
-|------|-------|-------------|
-| Samba | /samba | Re-homed Samba Config, data and log directory |
 
 Environment Variables
 =====================
