@@ -2,9 +2,14 @@ FROM alpine:latest
 MAINTAINER LasLabs Inc <support@laslabs.com>
 
 # Install
-RUN apk add --no-cache samba-dc supervisor \
+RUN apk add --no-cache \
+    samba-dc \
+    supervisor \
+    ldb-tools \
     # Remove default config data, if any
     && rm -rf /etc/samba
+
+ENV LDB_MODULES_PATH=/usr/lib/samba/ldb
 
 # Expose ports
 # EXPOSE 37/udp \
